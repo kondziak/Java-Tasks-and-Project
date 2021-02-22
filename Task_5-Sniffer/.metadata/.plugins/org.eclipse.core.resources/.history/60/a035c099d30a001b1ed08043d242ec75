@@ -1,0 +1,74 @@
+package task;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+
+
+class task1 {
+	
+	public static void main(String args[]) throws InterruptedException {
+		if(args.length != 2 && args.length != 3 && args.length != 5) {
+			throw new IllegalArgumentException("Nieprawidlowa ilosc plikow");
+		}
+		long start = System.currentTimeMillis();
+		for(String s : args) {
+			FileThread thr = new FileThread(s);
+			thr.start();
+			thr.join();
+		}
+		long end = System.currentTimeMillis();
+		
+		long startTwo = System.currentTimeMillis();
+		for(String s : args) {
+			FileThread thr = new FileThread(s);
+			thr.start();
+		}
+		while(Thread.activeCount() != 1);
+		long endTwo = System.currentTimeMillis();
+		
+		System.out.println("Took: " + (end - start));
+		System.out.println("Took: " + (endTwo - startTwo));
+	}
+	
+}
+
+	class FileThread extends Thread{
+		private String fileName;
+		
+		public FileThread(String fileName){
+			this.fileName = fileName;
+		}
+		
+		static void readRow(String fileName) {
+			BufferedReader reader = null;
+			try {
+				reader = new BufferedReader(new FileReader(fileName));
+				int lines = 0;
+				while(reader.readLine() != null) lines++;
+				System.out.println("Tyle wierszy: " + lines + ", posiada plik "+fileName);
+			} catch (IOException e) {
+				System.out.println(e.getLocalizedMessage());
+				e.printStackTrace();
+			}finally {
+				try {
+					if(reader != null) {
+						reader.close();
+					}
+				}catch(IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		public void run() {
+			System.out.println("Thread "+ this.getName() + " started");
+			long start = System.currentTimeMillis();
+			readRow(fileName);
+			long end = System.currentTimeMillis();
+			System.out.println(start + " and " + end);
+			System.out.println("Took: "+ ((end-start)));
+		}
+	}
