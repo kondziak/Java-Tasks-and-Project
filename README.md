@@ -7,5 +7,5 @@
   4) * My own implementation of binary tree
      * Difference between Comparator and Comparable
   5) Basic info about sniffer
-  6) Get the handle of files
+  6) Get the handle of files and Caeser cipher
   7) I used sockets and javafx to create simple hairdresser application with synchronization
