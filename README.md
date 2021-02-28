@@ -9,3 +9,7 @@
   5) Basic info about sniffer
   6) Get the handle of files and Caeser cipher
   7) I used sockets and javafx to create simple hairdresser application with synchronization
+### Sample Images
+![](Images/Image1.png)
+![](Images/Image2.png)
+![](Images/Image3.png)
